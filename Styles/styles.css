@@ -1,0 +1,286 @@
+/* =========================================================
+   PORTFOLIO · estilos propios sobre Bootstrap 5.3
+   Orden del archivo:
+   1. Variables (colores, fuentes) y temas claro / oscuro
+   2. Base e idiomas
+   3. Navbar
+   4. Componentes (tarjetas, botones, chips)
+   5. Hero
+   6. Secciones (about, skills, proyectos, formación, contacto)
+   7. Animaciones
+   8. Responsive
+   ========================================================= */
+
+/* ---------- 1. Variables y temas ---------- */
+:root,
+[data-bs-theme="dark"] {
+  --bg: #050b1f;
+  --card: #0b1536;
+  --ink: #eaf0ff;
+  --muted: #8d9cc6;
+  --line: rgba(130, 160, 255, .17);
+  --acc: #3d6bff;
+  --sky: #6cc4ff;
+  --chip: rgba(80, 120, 255, .13);
+  --glow: rgba(61, 107, 255, .5);
+  --grid: rgba(130, 160, 255, .06);
+  --grad: linear-gradient(120deg, #6f95ff, #6cc4ff);
+  --font: 'Onest', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  /* Conectamos nuestras variables con las de Bootstrap */
+  --bs-body-bg: var(--bg);
+  --bs-body-color: var(--ink);
+  --bs-body-font-family: var(--font);
+  --bs-secondary-color: var(--muted);
+  --bs-border-color: var(--line);
+  --bs-link-color-rgb: 108, 196, 255;
+}
+
+[data-bs-theme="light"] {
+  --bg: #eef3ff;
+  --card: #ffffff;
+  --ink: #0a1230;
+  --muted: #55638c;
+  --line: rgba(30, 60, 160, .14);
+  --acc: #2347e8;
+  --sky: #0a8fd6;
+  --chip: rgba(35, 71, 232, .08);
+  --glow: rgba(35, 71, 232, .25);
+  --grid: rgba(30, 60, 160, .06);
+  --grad: linear-gradient(120deg, #2347e8, #0a8fd6);
+  --bs-link-color-rgb: 35, 71, 232;
+}
+
+/* ---------- 2. Base e idiomas ---------- */
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+body {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Fondo: brillos azules suaves + cuadrícula fina que se difumina */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 12% -5%, var(--glow), transparent 70%),
+    radial-gradient(700px 480px at 100% 40%, rgba(108, 196, 255, .12), transparent 70%),
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: linear-gradient(#000 55%, transparent);
+          mask-image: linear-gradient(#000 55%, transparent);
+}
+
+a { text-underline-offset: 4px; }
+::selection { background: var(--acc); color: #fff; }
+:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; border-radius: 8px; }
+
+/* Cambio de idioma: se oculta lo que no corresponde */
+html[data-lang="en"] [lang="es"],
+html[data-lang="es"] [lang="en"] { display: none !important; }
+
+.text-grad {
+  background: var(--grad);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+/* Barra de progreso de scroll */
+#progress {
+  position: fixed; top: 0; left: 0; z-index: 2000;
+  height: 3px; width: 100%;
+  background: var(--grad);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+/* ---------- 3. Navbar ---------- */
+.site-nav {
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+  --bs-navbar-color: var(--muted);
+  --bs-navbar-hover-color: var(--ink);
+  --bs-navbar-active-color: var(--ink);
+  --bs-navbar-brand-color: var(--ink);
+  --bs-navbar-brand-hover-color: var(--ink);
+  --bs-navbar-toggler-border-color: var(--line);
+}
+.site-nav .navbar-brand { letter-spacing: -.02em; font-size: 1.25rem; }
+.logo-mark {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: 11px;
+  background: var(--grad); color: #fff;
+  font: 500 14px var(--mono);
+}
+.site-nav .nav-link { border-radius: 99px; padding: .5rem 1rem; font-weight: 500; transition: background .2s, color .2s; }
+.site-nav .nav-link:hover,
+.site-nav .nav-link.active { background: var(--chip); color: var(--ink); }
+.navbar-toggler:focus { box-shadow: 0 0 0 3px var(--sky); }
+[data-bs-theme="dark"] .navbar-toggler-icon { filter: invert(1); }
+
+.lang-switch { background: var(--chip); border: 1px solid var(--line); border-radius: 99px; padding: 3px; }
+.lang-switch .btn { border: 0; border-radius: 99px !important; color: var(--muted); font-weight: 600; padding: .25rem .75rem; }
+.lang-switch .btn[aria-pressed="true"] { background: var(--acc); color: #fff; }
+
+/* ---------- 4. Componentes ---------- */
+/* Tarjeta de Bootstrap personalizada con variables */
+.card {
+  --bs-card-bg: var(--card);
+  --bs-card-color: var(--ink);
+  --bs-card-border-color: var(--line);
+  --bs-card-border-radius: 1.6rem;
+  --bs-card-inner-border-radius: 1.6rem;
+  --bs-card-cap-bg: transparent;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Botones */
+.btn { font-weight: 600; border-radius: .9rem; transition: transform .2s, box-shadow .2s, background .2s; }
+.btn:hover { transform: translateY(-3px); }
+.btn-grad { background: var(--grad); border: 0; color: #fff; box-shadow: 0 12px 30px -10px var(--acc); }
+.btn-grad:hover, .btn-grad:focus { color: #fff; }
+.btn-soft { background: var(--chip); border: 1px solid var(--line); color: var(--ink); }
+.btn-soft:hover, .btn-soft:focus { background: var(--chip); color: var(--ink); border-color: var(--sky); }
+
+/* Chips de tecnologías (usan .badge de Bootstrap) */
+.chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.badge.chip {
+  background: var(--chip);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-weight: 500; font-size: .95rem;
+  padding: .4rem .85rem; border-radius: .65rem;
+}
+
+/* ---------- 5. Hero ---------- */
+.hero-card { opacity: 0; transform: translateY(20px); animation: rise .9s cubic-bezier(.2, .8, .2, 1) forwards; animation-delay: calc(var(--d, 0) * 80ms); }
+
+.main-card::after {
+  content: ""; position: absolute; right: -120px; top: -120px;
+  width: 340px; height: 340px; border-radius: 50%;
+  background: var(--glow); filter: blur(80px); opacity: .7; pointer-events: none;
+}
+.status-dot { width: 9px; height: 9px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 4px rgba(52, 211, 153, .2); display: inline-block; }
+.display-name { font-weight: 800; font-size: clamp(2.9rem, 6.6vw, 5.5rem); line-height: .98; letter-spacing: -.05em; }
+.role { font-size: clamp(1.2rem, 2.2vw, 1.6rem); letter-spacing: -.01em; }
+.lead-text { max-width: 34em; }
+
+.photo-card { min-height: 340px; }
+.photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.photo-card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 -90px 70px -40px rgba(5, 11, 31, .55); pointer-events: none; }
+.photo-caption {
+  position: absolute; left: 14px; bottom: 14px; z-index: 1;
+  background: rgba(5, 11, 31, .6); color: #fff;
+  border: 1px solid rgba(255, 255, 255, .2); border-radius: 99px;
+  padding: .35rem .9rem; font-size: .8rem; font-weight: 600;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+
+.label { font-size: .9rem; color: var(--muted); margin-bottom: .4rem; }
+.big { font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.85rem); line-height: 1.15; letter-spacing: -.02em; }
+.time { font: 500 2.4rem var(--mono); letter-spacing: -.04em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.code-card { background: #030716; --bs-card-bg: #030716; }
+.code-card pre { font: 400 .92rem/1.75 var(--mono); color: #c9d6ff; }
+.code-card .k { color: #6cc4ff; }
+.code-card .s { color: #8be0b0; }
+.code-card .dot { width: 10px; height: 10px; border-radius: 50%; background: #3d6bff; opacity: .5; display: inline-block; }
+
+/* Cinta de tecnologías */
+.marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 1.2rem 0; background: var(--chip); }
+.marquee div { display: flex; gap: 3rem; width: max-content; animation: run 38s linear infinite; font-weight: 700; font-size: 1.5rem; letter-spacing: -.02em; color: var(--muted); }
+.marquee span::after { content: "◆"; margin-left: 3rem; color: var(--acc); font-size: .75rem; vertical-align: 3px; }
+
+/* ---------- 6. Secciones ---------- */
+.section { padding-top: 7.5rem; }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2.75rem; }
+.section-title { font-weight: 800; font-size: clamp(2.6rem, 7vw, 6.2rem); line-height: .95; letter-spacing: -.05em; margin: 0; padding-bottom: .08em; }
+.section-head p { max-width: 26em; }
+
+/* Sobre mí */
+.about-lead { font-size: clamp(1.3rem, 2.3vw, 1.75rem); line-height: 1.35; font-weight: 600; letter-spacing: -.02em; margin-bottom: 1rem; }
+.stat { display: block; font-weight: 800; font-size: clamp(2.7rem, 5vw, 4rem); line-height: 1; letter-spacing: -.05em; }
+
+/* Tecnologías: foco de luz que sigue al ratón */
+.spot::after { content: ""; position: absolute; inset: 0; background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%), rgba(61, 107, 255, .2), transparent 60%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+.spot:hover::after { opacity: 1; }
+.learn-card { --bs-card-bg: transparent; background: var(--grad); color: #fff; border: 0; }
+.learn-card .badge.chip { background: rgba(255, 255, 255, .2); border-color: transparent; color: #fff; }
+
+/* Proyectos: tarjetas grandes que se apilan con sticky */
+.project {
+  position: sticky;
+  top: calc(88px + var(--i) * 26px);
+  min-height: min(68vh, 560px);
+  justify-content: center;
+  transition: border-color .4s, box-shadow .4s;
+}
+.project:hover { border-color: var(--sky); box-shadow: 0 30px 90px -40px var(--acc); }
+.project-title { font-weight: 800; font-size: clamp(2rem, 4.2vw, 3.6rem); line-height: 1; letter-spacing: -.045em; margin-bottom: 1rem; }
+
+.tilt { perspective: 1000px; }
+.screen {
+  aspect-ratio: 16 / 10; width: 100%;
+  border-radius: 1rem; border: 1px solid var(--line);
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  box-shadow: 0 40px 80px -30px #000;
+  transition: transform .25s ease-out;
+}
+.screen::before { content: ""; position: absolute; inset: 14% 8% 0; background: #060d26; border-radius: 10px 10px 0 0; border: 1px solid var(--line); }
+.screen::after { content: ""; position: absolute; left: 14%; top: 30%; width: 36%; height: 9px; border-radius: 9px; background: rgba(150, 180, 255, .3); box-shadow: 0 26px 0 rgba(150, 180, 255, .16), 0 52px 0 rgba(150, 180, 255, .16), 170px 0 0 rgba(150, 180, 255, .16); }
+
+/* Formación: línea de tiempo */
+.timeline { position: relative; padding-left: 2.9rem; }
+.timeline::before, .timeline-fill { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+.timeline-fill { background: var(--grad); height: var(--p, 0%); bottom: auto; }
+.timeline-item { margin-bottom: 1rem; }
+.timeline-item::before { content: ""; position: absolute; left: -3.3rem; top: 2rem; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--sky); }
+.when { color: var(--sky); font-weight: 700; font-size: .95rem; min-width: 140px; padding-top: .25rem; display: block; }
+/* Los puntos de la línea se ven fuera de la tarjeta */
+.timeline-item { overflow: visible; }
+
+/* Contacto */
+.contact-card { background: radial-gradient(600px 300px at 50% 0, var(--glow), transparent 70%), var(--card); }
+.contact-title { font-weight: 800; font-size: clamp(2.8rem, 10vw, 8.5rem); line-height: .92; letter-spacing: -.055em; padding-bottom: .08em; margin-bottom: 1.4rem; }
+.contact-text { max-width: 32em; }
+
+.site-footer { margin-top: 4.5rem; padding-top: 1.9rem; padding-bottom: 2.5rem; border-top: 1px solid var(--line); }
+
+/* ---------- 7. Animaciones ---------- */
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes run  { to { transform: translateX(-50%); } }
+
+/* Aparición al hacer scroll (la activa main.js) */
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2, .8, .2, 1), transform .9s cubic-bezier(.2, .8, .2, 1); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ---------- 8. Responsive ---------- */
+@media (max-width: 991.98px) {
+  .section { padding-top: 5.5rem; }
+  .project { position: sticky; top: calc(80px + var(--i) * 14px); min-height: 0; }
+  .photo-card { min-height: 320px; }
+  /* Menú desplegable en móvil/tablet */
+  .site-nav .navbar-collapse { padding: .75rem 0; }
+}
+@media (max-width: 575.98px) {
+  .section { padding-top: 4.5rem; }
+  .timeline { padding-left: 2rem; }
+  .timeline-item::before { left: -2.4rem; }
+}
+
+/* Accesibilidad: respeta a quien desactiva las animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .hero-card, .js .reveal { opacity: 1; transform: none; }
+}
