@@ -15,8 +15,8 @@
  
   /* ---------- 1. Idioma ---------- */
   var TITLES = {
-    es: 'Tu Nombre Apellido · Estudiante de Ingeniería del Software',
-    en: 'Tu Nombre Apellido · Software Engineering student'
+    es: 'Alvaro Martin Jurado · Estudiante de Ingeniería del Software',
+    en: 'Alvaro Martin Jurado · Software Engineering student'
   };
  
   function setLang(lang) {

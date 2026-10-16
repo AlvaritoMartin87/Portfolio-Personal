@@ -172,7 +172,7 @@ html[data-lang="es"] [lang="en"] { display: none !important; }
 }
 .status-dot { width: 9px; height: 9px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 4px rgba(52, 211, 153, .2); display: inline-block; }
 .display-name { font-weight: 800; font-size: clamp(2.9rem, 6.6vw, 5.5rem); line-height: .98; letter-spacing: -.05em; }
-.role { font-size: clamp(1.2rem, 2.2vw, 1.6rem); letter-spacing: -.01em; }
+.role { font-size: clamp(2.5rem, 4.8vw, 4.1rem); letter-spacing: -.01em; }
 .lead-text { max-width: 34em; }
 
 .photo-card { min-height: 340px; }
