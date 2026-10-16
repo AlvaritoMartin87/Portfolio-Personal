@@ -93,5 +93,50 @@
       if (p < 1) requestAnimationFrame(frame);
     })();
     }
+     var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      if (entry.target.dataset.count) countUp(entry.target);
+      else entry.target.classList.add('in');
+    });
+  }, { threshold: 0.2 });
+ 
+  document.querySelectorAll('[data-count]').forEach(function (el) { observer.observe(el); });
+  document.querySelectorAll('.reveal').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 3) * 90 + 'ms';
+    observer.observe(el);
+  });
+  /*-----6.Foco de luz y efecto 3D------- */
+   document.querySelectorAll('.spot').forEach(function (card) {
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+ 
+  if (!reduceMotion) {
+    document.querySelectorAll('.tilt').forEach(function (wrap) {
+      var screen = wrap.firstElementChild;
+      wrap.addEventListener('pointermove', function (e) {
+        var r = wrap.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        screen.style.transform = 'rotateY(' + x * 14 + 'deg) rotateX(' + (-y * 14) + 'deg)';
+      });
+      wrap.addEventListener('pointerleave', function () { screen.style.transform = ''; });
+    });
+  }
+
+  /* ---------- 7. Cerrar el menú al pulsar un enlace (móvil) ---------- */
+  var menu = document.getElementById('menu');
+  document.querySelectorAll('#navLinks .nav-link').forEach(function (link) {
+    link.addEventListener('click', function () {
+      if (menu.classList.contains('show')) {
+        bootstrap.Collapse.getOrCreateInstance(menu).hide();
+      }
+    });
+  });
 
     })()
